@@ -91,17 +91,38 @@ public class App
         
         
         //Create session object - get current session instance
-        Session session = factory.getCurrentSession();
+        Session session1 = factory.getCurrentSession();
         
-        Transaction transaction = session.beginTransaction();
+        // Transaction object require only to save data
+        Transaction transaction = session1.beginTransaction();
         
-        // Save objects
-        session.save(employee);
-        session.save(person);
+        // Save objects - save() deprecated so use persist()
+        //session1.save(employee);
+        //session1.persist(employee);
+        //session1.save(person);
+        //session1.persist(employee);
         
         transaction.commit();
+                
+        session1.close();
         
-        session.close();
+        //Get data from table
+        // Change <property name="hbm2ddl.auto">update</property>
+        Session session2 = factory.openSession();
+        
+        //get() - return null if object not found in chache as well as on database
+        
+        Employee employee_obj = (Employee)session2.get(Employee.class,100);
+        //System.out.println(employee_obj);
+        
+        Person person_obj = (Person)session2.get(Person.class,1);
+        //System.out.println(person_obj);
+        //System.out.println(person_obj.getFirstName());
+        //System.out.println(person_obj.getLastName());
+        
+        session2.close();
+        
+        factory.close();
         
     }
     
