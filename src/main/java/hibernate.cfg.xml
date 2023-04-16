@@ -24,7 +24,7 @@
     <!-- Create table always -->
     <!-- <property name="hbm2ddl.auto">create</property> -->
     <!-- Only update the existing table and create tables first time only -->
-    <property name="hbm2ddl.auto">update</property>
+    <property name="hbm2ddl.auto">create</property>
     
     <!-- mapping class="com.mcnz.jpa.examples.Player" / -->
     <mapping class="com.analyticssakha.hibernate_project.Employee"/>

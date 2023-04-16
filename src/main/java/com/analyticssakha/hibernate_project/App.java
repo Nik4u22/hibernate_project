@@ -42,7 +42,14 @@ public class App
         Employee employee = new Employee();
         employee.setId(100);
         employee.setSalary(50000);
-        System.out.println(employee);
+        
+        Education education = new Education();
+        education.setDegree_name("B.Tech");
+        education.setSpecialization("Information Technology");
+        education.setDuration("4 years");
+        education.setPassing_year("2014");
+        
+        employee.setEducation(education);
         
         //Create person object
         Person person = new Person();
@@ -89,6 +96,9 @@ public class App
         Date current_date = new Date();
         person.setDateadded(current_date);
         
+        // Set personid in employee
+        employee.setPerson(person);
+        System.out.println(employee);
         
         //Create session object - get current session instance
         Session session1 = factory.getCurrentSession();
@@ -97,9 +107,9 @@ public class App
         Transaction transaction = session1.beginTransaction();
         
         // Save objects - save() deprecated so use persist()
-        //session1.save(employee);
+        session1.save(person);
         //session1.persist(employee);
-        //session1.save(person);
+        session1.save(employee);
         //session1.persist(employee);
         
         transaction.commit();
