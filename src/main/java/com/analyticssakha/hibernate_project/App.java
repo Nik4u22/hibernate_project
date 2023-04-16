@@ -1,5 +1,15 @@
 package com.analyticssakha.hibernate_project;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +22,7 @@ import org.hibernate.cfg.Configuration;
 public class App 
 {
     @SuppressWarnings("deprecation")
-	public static void main( String[] args )
+	public static void main( String[] args ) throws IOException, ParseException
     {
         System.out.println( "Hibernate project!" );
         
@@ -29,23 +39,89 @@ public class App
         //System.out.println(factory.getCurrentSession());
         
         //Create employee object
-        Employee emp1 = new Employee();
-        emp1.setId(100);
-        emp1.setFirstName("Nikhil");
-        emp1.setLastName("Jagnade");
-        emp1.setEmail("nikhiljagnade22@gmail.com");
-        System.out.println(emp1);
+        Employee employee = new Employee();
+        employee.setId(100);
+        employee.setSalary(50000);
+        System.out.println(employee);
+        
+        //Create person object
+        Person person = new Person();
+        person.setId(1);
+        person.setFirstName("Nikhil");
+        person.setLastName("Jagnade");
+        person.setGender('M');
+        
+        // Date object to convert string to date object
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+        Date date_of_birth = simpleDateFormat.parse("21/01/1992");
+        person.setDateofbirth(date_of_birth);
+        person.setEmail("nikhiljagnade22@gmail.com");
+        
+        // Calculate age in years
+        LocalDate today = LocalDate.now(); // Today's date is 10th Jan 2022
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        dateTimeFormatter = dateTimeFormatter.withLocale( Locale.US );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+    	LocalDate birthday = LocalDate.parse("21/01/1992", dateTimeFormatter);// Birth date
+
+    	Period p = Period.between(birthday, today);
+    	// Now access the values as below
+    	//System.out.println(p.getDays());    //9
+    	//System.out.println(p.getMonths());  //0
+    	//System.out.println(p.getYears());   //42
+    	int age = p.getYears();
+    	person.setAge(age);
+        
+    	person.setContactno("8983668615");
+    	person.setAddress("Flat.NO. 1157, Lodha Heritage, Bandra West");
+    	person.setCity("Mumbai");
+    	person.setState("Maharashtra");
+    	person.setCountry("India");
+    	person.setPincode("400050");
+    	
+    	// Read image file using fileinputstream
+		FileInputStream fileInputStream = new FileInputStream("/Users/nik4u/eclipse-workspace/hibernate_project/src/main/java/avtar.jpeg");
+        byte[] image_data = new byte[fileInputStream.available()];
+        fileInputStream.read(image_data);
+        fileInputStream.close();
+        person.setAvtar(image_data);
+        
+        // Date object to get current date
+        Date current_date = new Date();
+        person.setDateadded(current_date);
+        
         
         //Create session object - get current session instance
         Session session = factory.getCurrentSession();
         
         Transaction transaction = session.beginTransaction();
         
-        session.save(emp1);
+        // Save objects
+        session.save(employee);
+        session.save(person);
         
         transaction.commit();
         
         session.close();
         
     }
+    
+    
+    // Method to calculate age
+    public int calculate_age(String date_of_birth) {
+    
+    	LocalDate today = LocalDate.now(); // Today's date is 10th Jan 2022
+    	LocalDate birthday = LocalDate.parse("21-01-1992");// Birth date
+
+    	Period p = Period.between(birthday, today);
+    	// Now access the values as below
+    	//System.out.println(p.getDays());    //9
+    	//System.out.println(p.getMonths());  //0
+    	//System.out.println(p.getYears());   //42
+    	int age = p.getYears();
+		return age;
+
+    }
+    
+ 
+    
 }
