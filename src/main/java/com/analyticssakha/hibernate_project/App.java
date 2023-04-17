@@ -38,22 +38,20 @@ public class App
         //System.out.println(factory.isClosed());
         //System.out.println(factory.getCurrentSession());
         
-        //Create employee object
-        Employee employee = new Employee();
-        employee.setId(100);
-        employee.setSalary(50000);
-        
-        Education education = new Education();
-        education.setDegree_name("B.Tech");
-        education.setSpecialization("Information Technology");
-        education.setDuration("4 years");
-        education.setPassing_year("2014");
-        
-        employee.setEducation(education);
+        //Create company object
+        Company company = new Company();
+        company.setName("Infosys Ltd");
+        company.setAddress("N 403. 405 North Block, 4th Floor, Manipal Centre, Near-Syndicate Bank, Mahatma Gandhi Road, Dickenson Road");
+        company.setCity("Bangaluru");
+        company.setState("Karnataka");
+        company.setCountry("India");
+        company.setPincode("560042");
+        company.setContactno("8025592088"); 
+        company.setEmail("contact@infosys.co.in");
+        //company.setEmployee(null);
         
         //Create person object
         Person person = new Person();
-        person.setId(1);
         person.setFirstName("Nikhil");
         person.setLastName("Jagnade");
         person.setGender('M');
@@ -96,8 +94,24 @@ public class App
         Date current_date = new Date();
         person.setDateadded(current_date);
         
+        
+        //Create employee object
+        Employee employee = new Employee();
+        employee.setSalary(50000);
+        
+        Education education = new Education();
+        education.setDegree_name("B.Tech");
+        education.setSpecialization("Information Technology");
+        education.setDuration("4 years");
+        education.setPassing_year("2014");
+        
+        employee.setEducation(education);
+       
         // Set personid in employee
         employee.setPerson(person);
+        
+        // Set employeeid in employee
+        employee.setCompany(company);
         System.out.println(employee);
         
         //Create session object - get current session instance
@@ -107,10 +121,9 @@ public class App
         Transaction transaction = session1.beginTransaction();
         
         // Save objects - save() deprecated so use persist()
+        session1.save(company);
         session1.save(person);
-        //session1.persist(employee);
         session1.save(employee);
-        //session1.persist(employee);
         
         transaction.commit();
                 
@@ -122,13 +135,16 @@ public class App
         
         //get() - return null if object not found in chache as well as on database
         
-        Employee employee_obj = (Employee)session2.get(Employee.class,100);
-        //System.out.println(employee_obj);
+        //Employee employee_obj = (Employee)session2.get(Employee.class,100);
+        //System.out.println(employee_obj.getSalary());
+        //System.out.println(employee_obj.getPerson()); //OnetoOne Mapping
+        //System.out.println(employee_obj.getPerson().getFirstName());
         
-        Person person_obj = (Person)session2.get(Person.class,1);
+        //Person person_obj = (Person)session2.get(Person.class,1);
         //System.out.println(person_obj);
         //System.out.println(person_obj.getFirstName());
         //System.out.println(person_obj.getLastName());
+        
         
         session2.close();
         

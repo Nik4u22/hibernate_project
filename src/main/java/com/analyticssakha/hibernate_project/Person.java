@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -70,17 +71,20 @@ public class Person {
     
     @Transient //field will not reflect in table
     private int x;
-    
 
+    @OneToOne(mappedBy = "person")
+    private Employee employee;
+    
 	public Person() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
 
 	public Person(int id, String firstName, String lastName, char gender, Date dateofbirth, String email, int age,
 			String contactno, String address, String city, String state, String country, String pincode, byte[] avtar,
-			Date dateadded, int x) {
+			Date dateadded, int x, Employee employee) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -98,6 +102,7 @@ public class Person {
 		this.avtar = avtar;
 		this.dateadded = dateadded;
 		this.x = x;
+		this.employee = employee;
 	}
 
 
@@ -260,13 +265,27 @@ public class Person {
 		this.x = x;
 	}
 
+	
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender
 				+ ", dateofbirth=" + dateofbirth + ", email=" + email + ", age=" + age + ", contactno=" + contactno
 				+ ", address=" + address + ", city=" + city + ", state=" + state + ", country=" + country + ", pincode="
-				+ pincode + ", avtar=" + Arrays.toString(avtar) + ", dateadded=" + dateadded + ", x=" + x + "]";
+				+ pincode + ", avtar=" + Arrays.toString(avtar) + ", dateadded=" + dateadded + ", x=" + x
+				+ ", employee=" + employee + "]";
 	}
-    
+
 }
