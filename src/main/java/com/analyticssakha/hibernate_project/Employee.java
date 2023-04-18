@@ -1,5 +1,7 @@
 package com.analyticssakha.hibernate_project;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -23,18 +25,25 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "company_Id")
 	private Company company;
+	
+	@ManyToMany
+	@JoinTable(name = "employee_project",
+	joinColumns = { @JoinColumn(name = "employee_Id") },
+	inverseJoinColumns = { @JoinColumn(name = "project_Id")})
+	private List<Project> projects;
 
     public Employee() {
 
     }
 
-	public Employee(int id, int salary, Education education, Person person, Company company) {
+	public Employee(int id, int salary, Education education, Person person, Company company, List<Project> projects) {
 		super();
 		this.id = id;
 		this.salary = salary;
 		this.education = education;
 		this.person = person;
 		this.company = company;
+		this.projects = projects;
 	}
 
 	public int getId() {
@@ -77,10 +86,19 @@ public class Employee {
 		this.company = company;
 	}
 
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", salary=" + salary + ", education=" + education + ", person=" + person
-				+ ", company=" + company + "]";
+				+ ", company=" + company + ", projects=" + projects + "]";
 	}
+
     
 }

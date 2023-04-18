@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.hibernate.Session;
@@ -114,6 +116,19 @@ public class App
         employee.setCompany(company);
         System.out.println(employee);
         
+        // Create project object
+        Project p1 = new Project();
+        p1.setProjectName("iLibrary");
+        Project p2 = new Project();
+        p2.setProjectName("Fnnone");
+        
+        List<Project> projectList = new ArrayList<Project>();
+        projectList.add(p1);
+        projectList.add(p2);
+        
+        //Set projects to employee
+        employee.setProjects(projectList);
+        
         //Create session object - get current session instance
         Session session1 = factory.getCurrentSession();
         
@@ -123,6 +138,8 @@ public class App
         // Save objects - save() deprecated so use persist()
         session1.save(company);
         session1.save(person);
+        session1.save(p1);
+        session1.save(p2);
         session1.save(employee);
         
         transaction.commit();
