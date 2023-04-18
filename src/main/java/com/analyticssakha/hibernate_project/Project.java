@@ -4,10 +4,12 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +24,8 @@ public class Project {
 	@Column(name = "project_name")
 	private String projectName;
 	
-	@ManyToMany(mappedBy = "projects")
+	//@ManyToMany(mappedBy = "projects")
+	@ManyToMany(mappedBy = "projects", fetch = FetchType.LAZY)
 	private List<Employee> employees;
 
 	public Project() {

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -72,7 +73,8 @@ public class Person {
     @Transient //field will not reflect in table
     private int x;
 
-    @OneToOne(mappedBy = "person")
+    //@OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
     private Employee employee;
     
 	public Person() {

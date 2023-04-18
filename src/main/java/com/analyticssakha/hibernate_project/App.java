@@ -107,6 +107,7 @@ public class App
         education.setDuration("4 years");
         education.setPassing_year("2014");
         
+        //employee.setEducation(new Education("B.Tech","Information Technology", "4 Years", "2014"));
         employee.setEducation(education);
        
         // Set personid in employee
@@ -146,14 +147,14 @@ public class App
                 
         session1.close();
         
-        //Get data from table
+        //Get data from table - Eager Loading
         // Change <property name="hbm2ddl.auto">update</property>
         Session session2 = factory.openSession();
         
         //get() - return null if object not found in chache as well as on database
         
-        //Employee employee_obj = (Employee)session2.get(Employee.class,100);
-        //System.out.println(employee_obj.getSalary());
+        Employee employee_obj = (Employee)session2.get(Employee.class,1);
+        //System.out.println("Employee Salary: "+employee_obj.getSalary());
         //System.out.println(employee_obj.getPerson()); //OnetoOne Mapping
         //System.out.println(employee_obj.getPerson().getFirstName());
         
